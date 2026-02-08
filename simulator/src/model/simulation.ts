@@ -93,7 +93,7 @@ export default class Simulation {
     }
 
     incrementRegister(offset : number = 1) {
-        this.#register = operand9Bits(offset + this.#register);
+        this.#register = signExtend9(operand9Bits(offset + this.#register));
     }
 
     halt() {
