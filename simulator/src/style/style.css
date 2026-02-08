@@ -1,0 +1,133 @@
+/* =========================
+   Root theme variables
+   ========================= */
+:root {
+  /* Colors */
+  --bg-main: #0f1117;
+  --bg-panel: #161a22;
+  --bg-panel-alt: #212838;
+  --bg-accent: #000000;
+
+  --border-color: #42495a;
+
+  --text-primary: #e6e8ee;
+  --text-secondary: #a9b0c3;
+  --text-muted: #6c738a;
+
+  --accent: #7aa2f7;
+  --accent-hover: #9ab6ff;
+  --danger: #f7768e;
+  --success: #9ece6a;
+
+  /* Fonts */
+  --font-ui: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: "Fira Code", "JetBrains Mono", Consolas, monospace;
+
+  /* Effects */
+  --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --radius: 6px;
+}
+
+/* =========================
+   Global styles
+   ========================= */
+body {
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  font-family: var(--font-ui);
+}
+
+/* =========================
+   Panels
+   ========================= */
+.panel {
+  background-color: var(--bg-panel);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft);
+}
+
+header {
+  color: var(--text-primary);
+  font-weight: 600;
+  border-bottom: 1px solid var(--border-color);
+}
+
+p.minor {
+  color: var(--text-secondary);
+}
+
+/* =========================
+   Editor
+   ========================= */
+.programEditor {
+  background-color: var(--bg-panel-alt);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  border: 2px solid var(--border-color); /* sutil borde */
+  border-radius: var(--radius);
+  outline: none;
+  resize: none;
+  padding: 0.5em;          /* espacio interior relativo */
+  font-size: 0.95rem;      /* ligeramente más pequeño que header */
+}
+
+.programEditor::selection {
+  background-color: var(--accent);
+  color: #000;
+}
+
+/* =========================
+   Memory view
+   ========================= */
+.memoryView {
+  font-family: var(--font-mono);
+  color: var(--text-secondary);
+}
+
+.memoryCell {
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+.memoryCell.changed {
+  background-color: rgba(122, 162, 247, 0.15);
+  border-color: var(--accent);
+}
+
+/* =========================
+   Buttons & inputs
+   ========================= */
+button{
+  background-color: var(--bg-accent);
+  color: var(--text-primary);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius);
+  font-family: var(--font-ui);
+  cursor: pointer;
+}
+
+button:hover, input[type="file"]:hover {
+  background-color: var(--accent);
+  color: #000;
+}
+
+
+input[type="file"] {
+  color: var(--text-secondary);
+}
+
+/* =========================
+   Utility text
+   ========================= */
+.text-muted {
+  color: var(--text-muted);
+}
+
+.text-success {
+  color: var(--success);
+}
+
+.text-danger {
+  color: var(--danger);
+}

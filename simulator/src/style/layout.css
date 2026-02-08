@@ -1,0 +1,79 @@
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding: 4ex;
+  gap: 4ex;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 2ex;
+}
+
+/* =========================
+   Main workspace
+   ========================= */
+.workspace {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 16px;
+  flex: 1;
+  min-height: 0;
+}
+
+
+header, .vert {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+header {
+  margin-bottom: 4ex;
+}
+
+.vert {
+  height: 100%;
+}
+
+.horizontal {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  
+}
+
+.programEditor {
+  width: 100%;
+  height: 50%;
+  margin: 0 20ex 2ex;
+  padding: 2ex;
+  line-height: 1.4;
+}
+
+h2:nth-of-type(n+2) {
+  margin-top: 5ex;
+}
+
+button {
+  width: 30ex;
+  height: 7ex;
+}
+
+.memoryView {
+  width: 40%;
+}
+
+table tr {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-content: center;
+}
