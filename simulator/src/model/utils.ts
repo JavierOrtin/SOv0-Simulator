@@ -12,9 +12,9 @@ export function getCodeLines(programText : string) {
 }
 
 /* Converts operands to their desired format while also checking their range */
-export function operand8Bits(op : number) {
-    if(op > 127 || op < -128) throw new Error("Operand not in range");
-    return op & 0xFF; // last 8 bits
+export function operand9Bits(op : number) {
+    if(op > 255 || op < -256) throw new Error("Operand not in range");
+    return op & 0x1FF; // last 9 bits
 }
 
 export function getBits(value : number, nBits : number, from : number) {
@@ -22,9 +22,9 @@ export function getBits(value : number, nBits : number, from : number) {
     return (value >> from) & mask;
 }
 
-/* Applies sign extension to an 8-bit number */
-export function signExtend8(value: number): number {
-    return value & 0x80 ? value - 0x100 : value;
+/* Applies sign extension to a 9-bit number */
+export function signExtend9(value: number): number {
+    return value & 0x100 ? value - 0x200 : value;
 }
 
 /* Returns the text in a given line that is not a comment*/

@@ -1,5 +1,5 @@
 import type Simulation from "./simulation";
-import { getBits, operand8Bits, signExtend8 } from "./utils";
+import { getBits, operand9Bits, signExtend9 } from "./utils";
 
 export abstract class Instruction {
 
@@ -13,10 +13,10 @@ export abstract class Instruction {
         const match = this.regEx.exec(line);
         if(!match) throw new Error("Invalid encoding");
 
-        const op1 = operand8Bits(parseInt(match[1]));
-        const op2 = operand8Bits(parseInt(match[2]));
+        const op1 = operand9Bits(parseInt(match[1]));
+        const op2 = operand9Bits(parseInt(match[2]));
         
-        return (this.instructionCode << 16) | op1 << 8 | op2;
+        return (this.instructionCode << 18) | op1 << 9 | op2;
     }
 
     static lineMatch(line : string) {
@@ -24,7 +24,7 @@ export abstract class Instruction {
     }
 
     static valueMatch(value : number) {
-        return getBits(value, 3, 16) == this.instructionCode;
+        return getBits(value, 3, 18) == this.instructionCode;
     }
 
     abstract runInstruction(simulation : Simulation) : void;
@@ -89,8 +89,8 @@ export class AddInstruction extends Instruction {
     static decode(value : number) {
         if(!this.valueMatch(value)) throw new Error("Invalid decoding");
 
-        return new AddInstruction(signExtend8(getBits(value, 8, 8)),
-            signExtend8(getBits(value, 8,0)));
+        return new AddInstruction(signExtend9(getBits(value, 9, 9)),
+            signExtend9(getBits(value, 9,0)));
     }
 
     runInstruction(simulation: Simulation): void {
@@ -111,7 +111,7 @@ export class ShiftInstruction extends Instruction {
     static decode(value : number) {
         if(!this.valueMatch(value)) throw new Error("Invalid decoding");
 
-        return new ShiftInstruction(signExtend8(getBits(value, 8, 8)));
+        return new ShiftInstruction(signExtend9(getBits(value, 9, 9)));
     }
 
     runInstruction(simulation: Simulation): void {
@@ -132,7 +132,7 @@ export class JumpInstruction extends Instruction {
     static decode(value : number) {
         if(!this.valueMatch(value)) throw new Error("Invalid decoding");
 
-        return new JumpInstruction(signExtend8(getBits(value, 8, 8)));
+        return new JumpInstruction(signExtend9(getBits(value, 9, 9)));
     }
 
     runInstruction(simulation: Simulation): void {
@@ -152,7 +152,7 @@ export class ZJumpInstruction extends Instruction {
     static decode(value : number) {
         if(!this.valueMatch(value)) throw new Error("Invalid decoding");
 
-        return new ZJumpInstruction(signExtend8(getBits(value, 8, 8)));
+        return new ZJumpInstruction(signExtend9(getBits(value, 9, 9)));
     }
 
     runInstruction(sim: Simulation): void {
@@ -174,7 +174,7 @@ export class ReadInstruction extends Instruction {
     static decode(value : number) {
         if(!this.valueMatch(value)) throw new Error("Invalid decoding");
 
-        return new ReadInstruction(getBits(value, 8, 8));
+        return new ReadInstruction(getBits(value, 9, 9));
     }
 
     runInstruction(simulation: Simulation): void {
@@ -195,7 +195,7 @@ export class WriteInstruction extends Instruction {
     static decode(value : number) {
         if(!this.valueMatch(value)) throw new Error("Invalid decoding");
 
-        return new WriteInstruction(getBits(value, 8, 8));
+        return new WriteInstruction(getBits(value, 9, 9));
     }
 
     runInstruction(simulation: Simulation): void {
@@ -216,7 +216,7 @@ export class IncInstruction extends Instruction {
     static decode(value : number) {
         if(!this.valueMatch(value)) throw new Error("Invalid decoding");
 
-        return new IncInstruction(signExtend8(getBits(value, 8, 8)));
+        return new IncInstruction(signExtend9(getBits(value, 9, 9)));
     }
 
     runInstruction(simulation: Simulation): void {

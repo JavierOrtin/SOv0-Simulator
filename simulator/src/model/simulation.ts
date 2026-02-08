@@ -1,6 +1,6 @@
 import ExecutionResult from "./executionResult";
 import { AddInstruction, HaltInstruction, IncInstruction, JumpInstruction, NopInstruction, ReadInstruction, ShiftInstruction, WriteInstruction, ZJumpInstruction, type InstructionClass } from "./instruction";
-import { getCodeFromLine, isBlank, operand8Bits } from "./utils";
+import { getCodeFromLine, isBlank, operand9Bits } from "./utils";
 
 export default class Simulation {
     
@@ -16,7 +16,7 @@ export default class Simulation {
     #modifiedCells: Map<number, number>;
 
 
-    constructor(programText : string, memoryExcessSize = 60, maxIns = 1000) {
+    constructor(programText : string, memoryExcessSize = 60, maxIns = 1e5) {
         if(memoryExcessSize <= 0) throw new Error("Invalid memory excess size");
         if(maxIns <= 0) throw new Error("Invalid max instruction number");
         
@@ -86,14 +86,14 @@ export default class Simulation {
 
     incrementProgramIndex(offset : number = 1) {
         try {
-            this.#programIndex = operand8Bits(offset + this.#programIndex);
+            this.#programIndex = operand9Bits(offset + this.#programIndex);
         } catch(err) {
             throw new Error("Program index set out of memory bounds");
         }
     }
 
     incrementRegister(offset : number = 1) {
-        this.#register = operand8Bits(offset + this.#register);
+        this.#register = operand9Bits(offset + this.#register);
     }
 
     halt() {
@@ -113,14 +113,14 @@ export default class Simulation {
 
     shiftRegister(amount: number) {
         if (amount > 0) {
-            this.#register = operand8Bits(this.#register >>> amount);
+            this.#register = operand9Bits(this.#register >>> amount);
         } else if (amount < 0) {
-            this.#register = operand8Bits(this.#register << -amount);
+            this.#register = operand9Bits(this.#register << -amount);
         }
     }
 
     setRegisterAddition(op1 : number, op2 : number) {
-        this.#register = operand8Bits(op1 + op2);
+        this.#register = operand9Bits(op1 + op2);
     }
 
     isRegisterZero() {
