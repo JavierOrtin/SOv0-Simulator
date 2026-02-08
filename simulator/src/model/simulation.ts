@@ -1,6 +1,6 @@
 import ExecutionResult from "./executionResult";
 import { AddInstruction, HaltInstruction, IncInstruction, JumpInstruction, NopInstruction, ReadInstruction, ShiftInstruction, WriteInstruction, ZJumpInstruction, type InstructionClass } from "./instruction";
-import { getCodeFromLine, isBlank, operand9Bits } from "./utils";
+import { getCodeFromLine, isBlank, operand9Bits, signExtend9 } from "./utils";
 
 export default class Simulation {
     
@@ -120,7 +120,7 @@ export default class Simulation {
     }
 
     setRegisterAddition(op1 : number, op2 : number) {
-        this.#register = operand9Bits(op1 + op2);
+        this.#register = signExtend9(operand9Bits(op1 + op2));
     }
 
     isRegisterZero() {
