@@ -1,0 +1,1 @@
+xcopy dist\* ..\ /E /I /Y
