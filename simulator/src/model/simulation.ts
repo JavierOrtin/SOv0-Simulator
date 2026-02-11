@@ -16,7 +16,7 @@ export default class Simulation {
     #modifiedCells: Map<number, number>;
 
 
-    constructor(programText : string, memoryExcessSize = 60, maxIns = 1e5) {
+    constructor(programText : string, memoryExcessSize = 60, maxIns = 1e12) {
         if(memoryExcessSize <= 0) throw new Error("Invalid memory excess size");
         if(maxIns <= 0) throw new Error("Invalid max instruction number");
         
