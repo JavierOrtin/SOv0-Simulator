@@ -3,7 +3,7 @@ import type ExecutionResult from "../model/executionResult";
 function parseResult(result: ExecutionResult) {
   return (
     <>
-      <p>{result.getMessage()}</p>
+      {result.getMessage().split("\n").map((text, index) => <p key={index}>{text}</p>)}
       <ul>
         <li>Instructions ran: {result.getInstructionCount()}</li>
         <li>Final register value: {result.getRegister()}</li>
@@ -19,7 +19,7 @@ function parseResult(result: ExecutionResult) {
             </tr>
           </thead>
           <tbody>
-            {[...result.getModifiedMemory()].map(([address, content]) => {
+            {[...result.getModifiedMemory()].sort(([a], [b]) => a - b).map(([address, content]) => {
               return (
                 <tr key={address}>
                   <td>{address}</td>

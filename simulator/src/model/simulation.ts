@@ -14,12 +14,14 @@ export default class Simulation {
     #register : number;
     #maxInstructions : number;
     #modifiedCells: Map<number, number>;
+    #sourceFinalMap: Map<number,number>;
 
 
-    constructor(programText : string, memoryExcessSize = 60, maxIns = 1e6) {
+    constructor(programText : string, memoryExcessSize = 60, maxIns = 1e7) {
         if(memoryExcessSize <= 0) throw new Error("Invalid memory excess size");
         if(maxIns <= 0) throw new Error("Invalid max instruction number");
         
+        this.#sourceFinalMap = new Map<number, number>();
 
         this.#memoryBoard = [
             ...this.#parseInstructions(programText.split("\n")),
@@ -31,6 +33,7 @@ export default class Simulation {
         this.#register = 0;
         this.#maxInstructions = maxIns;
         this.#modifiedCells = new Map<number,number>();
+        
     }
 
     #parseInstructions(lines : string[]) : number[] {
@@ -42,6 +45,7 @@ export default class Simulation {
             let isParsed = false;
             for(const kind of Simulation.#instructionOrder) {
                 if(kind.lineMatch(line)) {
+                    this.#sourceFinalMap.set(parsedLines.length, lineN);
                     parsedLines.push(kind.encode(line));
                     isParsed = true;
                     break;
@@ -68,7 +72,7 @@ export default class Simulation {
                         decoded.runInstruction(this);
                     } catch (err) {
                         goingRight = false;
-                        message = `Error running line ${lineN}:\n${(err instanceof Error) ? err.message : ""}`;
+                        message = `Error running line ${this.#sourceFinalMap.get(lineN) || `${lineN} (instruction out of program source code)`}:\n${(err instanceof Error) ? err.message : ""}`;
                     }
                     break;
                 }

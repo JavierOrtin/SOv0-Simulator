@@ -56,6 +56,10 @@ header {
   margin: 0 20ex 2ex;
   padding: 2ex;
   line-height: 1.4;
+  
+  white-space: pre;     /* Prevent wrapping */
+  overflow-x: auto;     /* Enable horizontal scroll */
+  overflow-y: auto;     /* Optional: vertical scroll */
 }
 
 h2:nth-of-type(n+2) {
@@ -69,11 +73,83 @@ button {
 
 .memoryView {
   width: 40%;
+  border-collapse: collapse; /* standard table layout */
+  table-layout: fixed;       /* fixes column widths */
 }
 
-table tr {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-content: center;
+.memoryView th, .memoryView td {
+  text-align: center;        /* center text inside cells */
+  padding: 0.5em;
+  border-top: 1px solid var(--border-color);
+  overflow-wrap: break-word; /* avoid overflow */
+}
+
+/* Optional: set relative column widths */
+.memoryView th:nth-child(1),
+.memoryView td:nth-child(1) {
+  width: 40%;                /* address column */
+}
+
+.memoryView th:nth-child(2),
+.memoryView td:nth-child(2) {
+  width: 60%;                /* content column */
+}
+
+
+/* =========================
+   Mobile / Responsive adjustments
+   ========================= */
+@media (max-width: 768px) {
+  body {
+    padding: 2ex;
+    gap: 2ex;
+  }
+
+  .horizontal {
+    flex-direction: column;   /* Stack panels vertically */
+    height: auto;
+  }
+
+  .vert {
+    width: 100%;
+    align-items: stretch;
+  }
+
+  .programEditor {
+    margin: 0 0 2ex 0;         /* remove huge horizontal margins */
+    height: 300px;             /* fixed height for mobile */
+    padding: 1ex;
+  }
+
+  .controls {
+    flex-direction: column;    /* stack buttons and file input */
+    gap: 1ex;
+    align-items: stretch;
+  }
+
+  button {
+    width: 100%;               /* buttons fill available width */
+    height: 5ex;               /* smaller height on mobile */
+  }
+
+  .memoryView {
+    width: 100%;               /* table fills width */
+    overflow-x: auto;          /* allow scrolling if content too wide */
+  }
+
+  table tr {
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  header {
+    font-size: 1.5rem;         /* slightly smaller header */
+    margin-bottom: 2ex;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+    text-align: left;
+    margin-top: 2ex;
+  }
 }
