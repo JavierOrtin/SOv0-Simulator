@@ -29,5 +29,5 @@ export function signExtend9(value: number): number {
 
 /* Returns the text in a given line that is not a comment*/
 export function getCodeFromLine(line : string) {
-    return line.split("#")[0].trim();
+    return line.split("//")[0].trim();
 }
