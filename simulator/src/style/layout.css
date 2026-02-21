@@ -99,7 +99,7 @@ button {
 /* =========================
    Mobile / Responsive adjustments
    ========================= */
-@media (max-width: 768px) {
+@media (max-width: 800px) {
   body {
     padding: 2ex;
     gap: 2ex;
